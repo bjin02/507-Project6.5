@@ -34,7 +34,11 @@ def basic_values_list(name):
 ## PART 1: Add another route /word/<new_word> as the instructions describe.
 @app.route('/word/<new_word>')
 def new_word(new_word):
-    return '<h1> {}</h1>'.format(new_word)
+    baseurl = 'https://api.datamuse.com/words?rel_rhy='
+    response_obj = requests.get(baseurl+new_word)
+    word_data = json.loads(response_obj.text)
+    similar_word = word_data[0]['word']
+    return '<h1> {}</h1>'.format(similar_word)
 
 ## PART 2: Edit the following route so that the photo_tags.html template will render
 @app.route('/flickrphotos/<tag>/<num>')
